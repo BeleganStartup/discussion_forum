@@ -35,7 +35,7 @@ class PostListAPI(APIView):
                 content = content,
             )
             resp = {
-                "details" : {
+                "details": {
                     "message": "Post has been created",
                     "url": post.get_absolute_url()
                 }
@@ -43,7 +43,7 @@ class PostListAPI(APIView):
             return Response(resp, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class PostDetailAPI(APIView):
     """ Create, Retreive, Update, and Delete a Post """

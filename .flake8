@@ -2,4 +2,6 @@
 
 max-line-length = 200
 
-ignore = []
+ignore = [
+    E251
+]
