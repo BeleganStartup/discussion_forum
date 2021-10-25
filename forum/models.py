@@ -77,3 +77,10 @@ def slugify_name(sender, instance, created, **kwargs):
         extra_text = str(uuid.uuid4())[0:8]
         instance.slug = f"{text}-{extra_text}"
         instance.save()
+
+@receiver(post_save, sender=Post)
+def initilize_likes(sender, instance, created, **kwargs):
+    """ Generate slug from title (+ random text) when post owner submit his post at first time """
+    if created:
+        Like.objects.create(post=instance)
+
