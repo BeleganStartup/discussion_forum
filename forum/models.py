@@ -1,12 +1,11 @@
-# Python
-import uuid
 # Django
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.dispatch import receiver
-from django.utils.text import slugify
 from django.db.models.signals import post_save
+# Forum
+from forum.utils import slugify_text
 
 
 USER = get_user_model()
@@ -31,16 +30,15 @@ class Post(models.Model):
 
     def get_likes(self, likes_model):
         """ Filter all likes related to current Post instance """
-        likes = likes_model.objects.filter(id=self.id)
+        likes = likes_model.objects.get(post=self)
         return likes
 
     def count_likes(self, post_likes):
         """ There are many ways to implement a proper like counting system.
         I decided to use a method for calculating the approximate number of likes,
         which is very fast and close to acceptable. """
-        # TODO: count likes
-        count_post_likes = 0
-        return count_post_likes
+        # Unwanted answer, I will keep it for now for test perpose
+        return post_likes.user.count()
 
 
 class Like(models.Model):
@@ -56,15 +54,13 @@ class Like(models.Model):
     def set_unset_like(self, target_user):
         """ When user exist then his like is counted and return True, otherwise remove it and return False"""
         try:
-            self.user.objects.get(pk=target_user)
+            self.user.get(pk=target_user.pk)
         except USER.DoesNotExist:
             self.user.add(target_user)
             like_exist = True
         else:
             self.user.remove(target_user)
             like_exist = False
-        finally:
-            self.user.save()
         return like_exist
 
 
@@ -73,14 +69,12 @@ class Like(models.Model):
 def slugify_name(sender, instance, created, **kwargs):
     """ Generate slug from title (+ random text) when post owner submit his post at first time """
     if created or instance.slug is None:
-        text = slugify(instance.title)
-        extra_text = str(uuid.uuid4())[0:8]
-        instance.slug = f"{text}-{extra_text}"
+        instance.slug = slugify_text(instance.title)
         instance.save()
+
 
 @receiver(post_save, sender=Post)
 def initilize_likes(sender, instance, created, **kwargs):
     """ Generate slug from title (+ random text) when post owner submit his post at first time """
     if created:
         Like.objects.create(post=instance)
-

@@ -9,7 +9,7 @@ from forum.models import Post, Like
 class LikeAdmin(admin.ModelAdmin):
     filter_horizontal = ('user', )
     readonly_fields = ('post', )
-    
+
     def has_add_permission(self, *args, **kwargs):
         return False
 

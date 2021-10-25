@@ -1,11 +1,18 @@
 # .coveragerc to control coverage.py
 [run]
+source = '.'
 branch = True
 omit =
         *Test*
         */env/*
         */usr/local/lib*
         */__init__.py
+        */source/asgi.py
+        */source/wsgi.py
+        */source/settings.py
+        */manage.py
+        */test_*.py
+
 
 
 [report]
@@ -14,6 +21,11 @@ omit =
         */env/*
         */usr/local/lib*
         */__init__.py
+        */source/asgi.py
+        */source/wsgi.py
+        */source/settings.py
+        */manage.py
+        */test_*.py
 
 
 # Regexes for lines to exclude from consideration
