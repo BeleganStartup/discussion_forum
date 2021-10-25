@@ -62,7 +62,7 @@ class PostDetailAPI(APIView):
     def delete(self, request, slug):
         # Delete Post
         try:
-            post = Post.objects.get(slug=slug)
+            post = Post.objects.get(slug=slug, owner=request.user)
         except Post.DoesNotExist:
             return Response({"details": "Post is not found."}, status=status.HTTP_404_NOT_FOUND)
         else:
@@ -72,7 +72,7 @@ class PostDetailAPI(APIView):
     def patch(self, request, slug):
         # Update Post
         try:
-            post = Post.objects.get(slug=slug)
+            post = Post.objects.get(slug=slug, owner=request.user)
         except Post.DoesNotExist:
             return Response({"details": "Post is not found."}, status=status.HTTP_404_NOT_FOUND)
         else:
