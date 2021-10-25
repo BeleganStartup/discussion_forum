@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # PIP Apps
     'rest_framework',
     # Local Apps
+    'forum',
 ]
 
 # Middlewares
@@ -128,3 +129,9 @@ STATICFILES_DIRS = (f'{BASE_DIR}{STATICFILES_URL}',)
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
