@@ -1,9 +1,11 @@
 # Django
+from django.conf import settings
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.db import connection
 # Forum
 from forum.utils import slugify_text
 
@@ -34,10 +36,8 @@ class Post(models.Model):
         return likes
 
     def count_likes(self, post_likes):
-        """ There are many ways to implement a proper like counting system.
-        I decided to use a method for calculating the approximate number of likes,
-        which is very fast and close to acceptable. """
-        # Unwanted answer, I will keep it for now for test perpose
+        """ I tried to calculatethe approximate number of likes.
+        I will just use the simple method to do that """
         return post_likes.user.count()
 
 

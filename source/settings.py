@@ -91,8 +91,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': config('DB_PRODUCTION_NAME'),
-            'USER': config(''),
-            'PASSWORD': config(''),
+            'USER': config('DB_PRODUCTION_USER'),
+            'PASSWORD': config('DB_PRODUCTION_PASS'),
             'HOST': 'localhost',  # localhost for Default host
             'PORT': '',  # Blank for default port
         }
