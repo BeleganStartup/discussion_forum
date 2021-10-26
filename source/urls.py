@@ -18,6 +18,9 @@ from decouple import config
 # Django
 from django.contrib import admin
 from django.urls import path, include
+# Source
+from source.entry_point import home
+
 
 ADMIN_DASHBOARD = config('ADMIN_DASHBOARD')
 BROWSABLE_API = config('BROWSABLE_API')
@@ -28,4 +31,5 @@ urlpatterns = [
     path(f'{ADMIN_DASHBOARD}/', admin.site.urls),
     path(f'{BROWSABLE_API}/', include('rest_framework.urls')),
     path(f'api/v{API_VERSION}/', include('forum.urls')),
+    path('', home, name="home"),
 ]
