@@ -18,6 +18,7 @@ Testings:
 - Only models are tested.
 - Serializers are not tested.
 - Views are not tested.
+- Coverage is not enough, need more working.
 
 
 Populating:
